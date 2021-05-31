@@ -1,21 +1,28 @@
-import React from 'react';
-import ReactDOM from 'react-dom';
-import './index.css';
-import App from './App';
-import { store } from './app/store';
-import { Provider } from 'react-redux';
-import * as serviceWorker from './serviceWorker';
+import store from "./store";
 
-ReactDOM.render(
-  <React.StrictMode>
-    <Provider store={store}>
-      <App />
-    </Provider>
-  </React.StrictMode>,
-  document.getElementById('root')
-);
+console.log(store.getState());
 
-// If you want your app to work offline and load faster, you can change
-// unregister() to register() below. Note this comes with some pitfalls.
-// Learn more about service workers: https://bit.ly/CRA-PWA
-serviceWorker.unregister();
+const unsubscribe = store.subscribe(()=>{
+  console.log('store change',store.getState());
+});
+
+store.dispatch({
+  type: 'bugAdded',
+  payload: {
+    description: 'bug1'
+  }
+});
+
+unsubscribe();
+
+store.dispatch({
+  type: 'bugRemoved',
+  payload: {
+    id:1
+  }
+});
+
+
+
+console.log(store);
+console.log(store.getState());
