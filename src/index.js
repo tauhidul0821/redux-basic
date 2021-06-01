@@ -1,28 +1,24 @@
 import store from "./store";
+import { bugAdded,bugResolved } from "./actions";
 
 console.log(store.getState());
 
-const unsubscribe = store.subscribe(()=>{
+store.subscribe(()=>{
   console.log('store change',store.getState());
 });
 
-store.dispatch({
-  type: 'bugAdded',
-  payload: {
-    description: 'bug1'
-  }
-});
+store.dispatch(bugAdded('bug 1 suhifh'));
 
-unsubscribe();
+// unsubscribe();
 
-store.dispatch({
-  type: 'bugRemoved',
-  payload: {
-    id:1
-  }
-});
+// store.dispatch({
+//   type: actions.BUG_REMOVED,
+//   payload: {
+//     id:1
+//   }
+// });
 
-
+store.dispatch(bugResolved(1));
 
 console.log(store);
 console.log(store.getState());
